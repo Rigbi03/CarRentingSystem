@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a59dd15c09f741e3a818ee2f11acc4bb" Name="Diagram1">
+        <EntityTypeShape EntityType="CarDBModel.CarBooking" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="CarDBModel.Car" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="CarDBModel.Payment" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="CarDBModel.ApplicationRole" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="CarDBModel.ApplicationUserClaim" Width="1.5" PointX="5.25" PointY="3.625" />
+        <EntityTypeShape EntityType="CarDBModel.ApplicationUserLogin" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="CarDBModel.ApplicationUser" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="CarDBModel.BookingStatu" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="CarDBModel.CarBrand" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CarDBModel.PaymentType" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CarDBModel.User" Width="1.5" PointX="8.75" PointY="6.75" />
+        <AssociationConnector Association="CarDBModel.FK_dbo_ApplicationUserClaims_dbo_ApplicationUsers_UserId" />
+        <AssociationConnector Association="CarDBModel.FK_dbo_ApplicationUserLogins_dbo_ApplicationUsers_UserId" />
+        <AssociationConnector Association="CarDBModel.ApplicationUserRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,566 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CarDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CarBookings">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CustomerAddress" Type="nvarchar" MaxLength="550" Nullable="false" />
+          <Property Name="CustomerPhoneNumber" Type="varchar" MaxLength="50" />
+          <Property Name="BookingFrom" Type="date" Nullable="false" />
+          <Property Name="BookingTo" Type="date" Nullable="false" />
+          <Property Name="AssignCarId" Type="int" Nullable="false" />
+          <Property Name="NoOfMembers" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="CarId" />
+          </Key>
+          <Property Name="CarId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CarImage" Type="nvarchar" MaxLength="550" Nullable="false" />
+          <Property Name="CarPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BookingStatusId" Type="int" Nullable="false" />
+          <Property Name="CarBrandId" Type="int" Nullable="false" />
+          <Property Name="CarModel" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CarYear" Type="int" Nullable="false" />
+          <Property Name="CarCapacity" Type="int" Nullable="false" />
+          <Property Name="CarDescription" Type="nvarchar" MaxLength="550" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingId" Type="int" Nullable="false" />
+          <Property Name="PaymentTypeId" Type="int" Nullable="false" />
+          <Property Name="PaymentAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApplicationRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApplicationUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ApplicationUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApplicationUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApplicationUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookingStatus">
+          <Key>
+            <PropertyRef Name="BookingStatusId" />
+          </Key>
+          <Property Name="BookingStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingStatus" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarBrands">
+          <Key>
+            <PropertyRef Name="CarBrandId" />
+          </Key>
+          <Property Name="CarBrandId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarBrandName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentTypes">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SurName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EGN" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_ApplicationUserClaims_dbo_ApplicationUsers_UserId">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ApplicationUserClaims" Type="Self.ApplicationUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ApplicationUserLogins_dbo_ApplicationUsers_UserId">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ApplicationUserLogins" Type="Self.ApplicationUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ApplicationUserRoles_dbo_ApplicationRoles_RoleId">
+          <End Role="ApplicationRoles" Type="Self.ApplicationRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ApplicationUserRoles" Type="Self.ApplicationUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ApplicationUserRoles_dbo_ApplicationUsers_UserId">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ApplicationUserRoles" Type="Self.ApplicationUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarDBModelStoreContainer">
+          <EntitySet Name="CarBookings" EntityType="Self.CarBookings" Schema="Cars" store:Type="Tables" />
+          <EntitySet Name="Cars" EntityType="Self.Cars" Schema="Cars" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="Cars" store:Type="Tables" />
+          <EntitySet Name="ApplicationRoles" EntityType="Self.ApplicationRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApplicationUserClaims" EntityType="Self.ApplicationUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApplicationUserLogins" EntityType="Self.ApplicationUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApplicationUserRoles" EntityType="Self.ApplicationUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApplicationUsers" EntityType="Self.ApplicationUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookingStatus" EntityType="Self.BookingStatus" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="CarBrands" EntityType="Self.CarBrands" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="PaymentTypes" EntityType="Self.PaymentTypes" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="Master" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_ApplicationUserClaims_dbo_ApplicationUsers_UserId" Association="Self.FK_dbo_ApplicationUserClaims_dbo_ApplicationUsers_UserId">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserClaims" EntitySet="ApplicationUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ApplicationUserLogins_dbo_ApplicationUsers_UserId" Association="Self.FK_dbo_ApplicationUserLogins_dbo_ApplicationUsers_UserId">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserLogins" EntitySet="ApplicationUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ApplicationUserRoles_dbo_ApplicationRoles_RoleId" Association="Self.FK_dbo_ApplicationUserRoles_dbo_ApplicationRoles_RoleId">
+            <End Role="ApplicationRoles" EntitySet="ApplicationRoles" />
+            <End Role="ApplicationUserRoles" EntitySet="ApplicationUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ApplicationUserRoles_dbo_ApplicationUsers_UserId" Association="Self.FK_dbo_ApplicationUserRoles_dbo_ApplicationUsers_UserId">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserRoles" EntitySet="ApplicationUserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CarDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CarDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CarBookings" EntityType="CarDBModel.CarBooking" />
+          <EntitySet Name="Cars" EntityType="CarDBModel.Car" />
+          <EntitySet Name="Payments" EntityType="CarDBModel.Payment" />
+          <EntitySet Name="ApplicationRoles" EntityType="CarDBModel.ApplicationRole" />
+          <EntitySet Name="ApplicationUserClaims" EntityType="CarDBModel.ApplicationUserClaim" />
+          <EntitySet Name="ApplicationUserLogins" EntityType="CarDBModel.ApplicationUserLogin" />
+          <EntitySet Name="ApplicationUsers" EntityType="CarDBModel.ApplicationUser" />
+          <EntitySet Name="BookingStatus" EntityType="CarDBModel.BookingStatu" />
+          <EntitySet Name="CarBrands" EntityType="CarDBModel.CarBrand" />
+          <EntitySet Name="PaymentTypes" EntityType="CarDBModel.PaymentType" />
+          <EntitySet Name="Users" EntityType="CarDBModel.User" />
+          <AssociationSet Name="FK_dbo_ApplicationUserClaims_dbo_ApplicationUsers_UserId" Association="CarDBModel.FK_dbo_ApplicationUserClaims_dbo_ApplicationUsers_UserId">
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserClaim" EntitySet="ApplicationUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ApplicationUserLogins_dbo_ApplicationUsers_UserId" Association="CarDBModel.FK_dbo_ApplicationUserLogins_dbo_ApplicationUsers_UserId">
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserLogin" EntitySet="ApplicationUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUserRoles" Association="CarDBModel.ApplicationUserRoles">
+            <End Role="ApplicationRole" EntitySet="ApplicationRoles" />
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CarBooking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerAddress" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BookingFrom" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="BookingTo" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AssignCarId" Type="Int32" Nullable="false" />
+          <Property Name="NoOfMembers" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="CarId" />
+          </Key>
+          <Property Name="CarId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CarImage" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="CarPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="BookingStatusId" Type="Int32" Nullable="false" />
+          <Property Name="CarBrandId" Type="Int32" Nullable="false" />
+          <Property Name="CarModel" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CarYear" Type="Int32" Nullable="false" />
+          <Property Name="CarCapacity" Type="Int32" Nullable="false" />
+          <Property Name="CarDescription" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ApplicationRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ApplicationUsers" Relationship="CarDBModel.ApplicationUserRoles" FromRole="ApplicationRole" ToRole="ApplicationUser" />
+        </EntityType>
+        <EntityType Name="ApplicationUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ApplicationUser" Relationship="CarDBModel.FK_dbo_ApplicationUserClaims_dbo_ApplicationUsers_UserId" FromRole="ApplicationUserClaim" ToRole="ApplicationUser" />
+        </EntityType>
+        <EntityType Name="ApplicationUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ApplicationUser" Relationship="CarDBModel.FK_dbo_ApplicationUserLogins_dbo_ApplicationUsers_UserId" FromRole="ApplicationUserLogin" ToRole="ApplicationUser" />
+        </EntityType>
+        <EntityType Name="ApplicationUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BookingStatu">
+          <Key>
+            <PropertyRef Name="BookingStatusId" />
+          </Key>
+          <Property Name="BookingStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CarBrand">
+          <Key>
+            <PropertyRef Name="CarBrandId" />
+          </Key>
+          <Property Name="CarBrandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarBrandName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentType1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SurName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EGN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_ApplicationUserClaims_dbo_ApplicationUsers_UserId">
+          <End Type="CarDBModel.ApplicationUser" Role="ApplicationUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CarDBModel.ApplicationUserClaim" Role="ApplicationUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ApplicationUserLogins_dbo_ApplicationUsers_UserId">
+          <End Type="CarDBModel.ApplicationUser" Role="ApplicationUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CarDBModel.ApplicationUserLogin" Role="ApplicationUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApplicationUserRoles">
+          <End Type="CarDBModel.ApplicationRole" Role="ApplicationRole" Multiplicity="*" />
+          <End Type="CarDBModel.ApplicationUser" Role="ApplicationUser" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CarDBModelStoreContainer" CdmEntityContainer="CarDBEntities">
+          <EntitySetMapping Name="CarBookings">
+            <EntityTypeMapping TypeName="CarDBModel.CarBooking">
+              <MappingFragment StoreEntitySet="CarBookings">
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="NoOfMembers" ColumnName="NoOfMembers" />
+                <ScalarProperty Name="AssignCarId" ColumnName="AssignCarId" />
+                <ScalarProperty Name="BookingTo" ColumnName="BookingTo" />
+                <ScalarProperty Name="BookingFrom" ColumnName="BookingFrom" />
+                <ScalarProperty Name="CustomerPhoneNumber" ColumnName="CustomerPhoneNumber" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cars">
+            <EntityTypeMapping TypeName="CarDBModel.Car">
+              <MappingFragment StoreEntitySet="Cars">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CarDescription" ColumnName="CarDescription" />
+                <ScalarProperty Name="CarCapacity" ColumnName="CarCapacity" />
+                <ScalarProperty Name="CarYear" ColumnName="CarYear" />
+                <ScalarProperty Name="CarModel" ColumnName="CarModel" />
+                <ScalarProperty Name="CarBrandId" ColumnName="CarBrandId" />
+                <ScalarProperty Name="BookingStatusId" ColumnName="BookingStatusId" />
+                <ScalarProperty Name="CarPrice" ColumnName="CarPrice" />
+                <ScalarProperty Name="CarImage" ColumnName="CarImage" />
+                <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="CarDBModel.Payment">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicationRoles">
+            <EntityTypeMapping TypeName="CarDBModel.ApplicationRole">
+              <MappingFragment StoreEntitySet="ApplicationRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicationUserClaims">
+            <EntityTypeMapping TypeName="CarDBModel.ApplicationUserClaim">
+              <MappingFragment StoreEntitySet="ApplicationUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicationUserLogins">
+            <EntityTypeMapping TypeName="CarDBModel.ApplicationUserLogin">
+              <MappingFragment StoreEntitySet="ApplicationUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicationUsers">
+            <EntityTypeMapping TypeName="CarDBModel.ApplicationUser">
+              <MappingFragment StoreEntitySet="ApplicationUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingStatus">
+            <EntityTypeMapping TypeName="CarDBModel.BookingStatu">
+              <MappingFragment StoreEntitySet="BookingStatus">
+                <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />
+                <ScalarProperty Name="BookingStatusId" ColumnName="BookingStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarBrands">
+            <EntityTypeMapping TypeName="CarDBModel.CarBrand">
+              <MappingFragment StoreEntitySet="CarBrands">
+                <ScalarProperty Name="CarBrandName" ColumnName="CarBrandName" />
+                <ScalarProperty Name="CarBrandId" ColumnName="CarBrandId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTypes">
+            <EntityTypeMapping TypeName="CarDBModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentTypes">
+                <ScalarProperty Name="PaymentType1" ColumnName="PaymentType" />
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CarDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EGN" ColumnName="EGN" />
+                <ScalarProperty Name="SurName" ColumnName="SurName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ApplicationUserRoles" TypeName="CarDBModel.ApplicationUserRoles" StoreEntitySet="ApplicationUserRoles">
+            <EndProperty Name="ApplicationUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="ApplicationRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,226 @@
+﻿@model CarRentingSystem.ViewModel.CarViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadCarDetails();
+        $('#txtCarId').val("0");
+        $("#btnSave").click(function () {
+            if (!$("#formCar").valid()) {
+                return
+            }
+            SaveCarData();
+        });
+    });
+
+    function DeleteCar(carId)
+    {
+        var result = confirm("Are you sure you want to delete?");
+        if (result === false) {
+            return false;
+        }
+        $.ajax({
+            async: true,
+            type: 'GET',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: { carId: carId },
+            url: '/Car/DeleteCarDetails',
+            success: function (data) {
+                if (data.success === true) {
+                    alert(data.message);
+                    LoadCarDetails();
+                }
+            },
+            error: function () {
+                alert('You Need to be admin to Delete Cars!');
+            }
+        });
+    }
+
+    function EditCar(carId)
+    {
+        $.ajax({
+            async: true,
+            type: 'GET',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: { carId: carId },
+            url: '/Car/EditCarDetails',
+            success: function (data) {
+                $("#txtCarNumber").val(data.CarNumber);
+                $("#txtCarPrice").val(data.CarPrice);
+                $("#ddBookingStatus").val(data.BookingStatusId);
+                $("#ddtxtCarBrand").val(data.CarBrandId);
+                $("#txtCarModel").val(data.CarModel);
+                $("#txtCarYear").val(data.CarYear);
+                $("#txtCarCapacity").val(data.CarCapacity);
+                $("#txtCarDescription").val(data.CarDescription);
+                $("#imgCar").attr('src', "../CarImages/" + data.CarImage);
+                $("#divAddCar").modal({ show: true });
+                $("#txtCarId").val(data.CarId);
+                $("#btnSave").text("Update");
+            },
+            error: function () {
+                alert('You Need to be admin to Edit Car Details!');
+            }
+        });
+    }
+
+    function LoadCarDetails()
+    {
+         //$("#divLoadCarDetails")
+
+        $.ajax({
+            async: true,
+            data: 'Get',
+            dataType: 'HTML',
+            contentType: false,
+            processData: false,
+            url: '/Car/GetAllCars',
+            success: function (data) {
+                $("#divLoadCarDetails").html(data);
+            },
+            error: function () {
+                alert('There is some problem to process your request.')
+            }
+        });
+    }
+
+    function SaveCarData() {
+        var formData = new FormData;
+        formData.append("CarId", $("#txtCarId").val());
+        formData.append("CarNumber", $("#txtCarNumber").val());
+        formData.append("CarPrice", $("#txtCarPrice").val());
+        formData.append("BookingStatusId", $("#ddBookingStatus").val());
+        formData.append("CarBrandId", $("#ddtxtCarBrand").val());
+        formData.append("CarModel", $("#txtCarModel").val());
+        formData.append("CarYear", $("#txtCarYear").val());
+        formData.append("CarCapacity", $("#txtCarCapacity").val());
+        formData.append("CarDescription", $("#txtCarDescription").val());
+        formData.append("Image", $("#UploadImage").get(0).files[0]);
+
+        $.ajax({
+            async: true,
+            type: 'Post',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (data) {
+                if (data.success === true) {
+                    alert(data.message);
+                    ResetCarInfomation();
+                    LoadCarDetails();
+                }
+            },
+            error: function() {
+                alert('There is some problem to process your request. Please try again later');
+            }
+        })
+    }
+
+    function ResetCarInfomation() {
+        $("#txtCarNumber").val('');
+        $("#txtCarPrice").val('');
+        $("#ddBookingStatus").val(1);
+        $("#ddtxtCarBrand").val(1);
+        $("#txtCarModel").val('');
+        $("#txtCarYear").val('');
+        $("#txtCarCapacity").val('');
+        $("#txtCarDescription").val('');
+        $("#UploadImage").val('');
+        $("#txtCarNumber").focus();
+        $("#imgCar").removeAttr('src');
+        $("#txtCarId").val(0);
+        $("#btnSave").text("Save");
+    }
+
+    function DisplayImage(result) {
+        if (result.files && result.files[0]) {
+            var fileReader = new FileReader();
+            fileReader.onload = function(e) {
+                $("#imgCar").attr('src', e.target.result);
+            }
+            fileReader.readAsDataURL(result.files[0]);
+        }
+    }
+</script>
+
+<div style="margin-top: 50px">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#divAddCar" data-backdrop="static" data-keyboard="false"> Add Car </button>
+</div>
+
+<div id="divAddCar" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times; </button>
+                <h4 class="modal-title">Car</h4>
+            </div>
+            <div class="modal-body">
+              <form id="formCar">
+                <div class="container">
+                    @Html.HiddenFor(model => model.CarId, new {@id = "txtCarId" })
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.CarNumber)
+                        @Html.TextBoxFor(model => model.CarNumber, new { @class = "form-control", id="txtCarNumber" })
+                        @Html.ValidationMessageFor(model => model.CarNumber, null, new {@class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.CarPrice)
+                        @Html.TextBoxFor(model => model.CarPrice, new { @class = "form-control", id = "txtCarPrice" })
+                        @Html.ValidationMessageFor(model => model.CarPrice, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.BookingStatusId)
+                        @Html.DropDownListFor(model => model.BookingStatusId, Model.ListOfBookingStatus, new { @class = "form-control", id = "ddBookingStatus" })
+                        @Html.ValidationMessageFor(model => model.BookingStatusId, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.CarBrandId)
+                        @Html.DropDownListFor(model => model.CarBrandId, Model.ListOfCarBrand, new { @class = "form-control", id = "ddtxtCarBrand" })
+                        @Html.ValidationMessageFor(model => model.CarBrandId, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.CarModel)
+                        @Html.TextBoxFor(model => model.CarModel, new { @class = "form-control", id = "txtCarModel" })
+                        @Html.ValidationMessageFor(model => model.CarModel, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.CarYear)
+                        @Html.TextBoxFor(model => model.CarYear, new { @class = "form-control", id = "txtCarYear" })
+                        @Html.ValidationMessageFor(model => model.CarYear, null, new { @class = "text-danger" })
+                    </div> 
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.CarCapacity)
+                        @Html.TextBoxFor(model => model.CarCapacity, new { @class = "form-control", id = "txtCarCapacity" })
+                        @Html.ValidationMessageFor(model => model.CarCapacity, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.CarDescription)
+                        @Html.TextBoxFor(model => model.CarDescription, new { @class = "form-control", id = "txtCarDescription" })
+                        @Html.ValidationMessageFor(model => model.CarDescription, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-8">
+                        @Html.LabelFor(model => model.CarImage)
+                        <input id="UploadImage" type="file" class="form-control" name="carImage" title="Load Image" onchange="DisplayImage(this)" />
+                        <img id="imgCar" height="200" width="200" style="border: solid" />
+                    </div>
+                </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSave" type="button" class="btn btn-success">Save</button> &nbsp;
+                <button type="button" data-dismiss="modal" class="btn btn-danger">Close</button>
+            </div>
+        </div>
+    </div>
+ </div>
+<div style="margin-top: 40px"></div>
+<div id="divLoadCarDetails">
+    
+</div>
+

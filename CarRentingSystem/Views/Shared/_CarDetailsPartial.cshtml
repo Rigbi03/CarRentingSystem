@@ -1,0 +1,76 @@
+﻿@model IEnumerable<CarRentingSystem.ViewModel.CarDetailsViewModel>
+
+<table style="width: 100%">
+    <thead>
+        <tr>
+            <th>
+                Action
+            </th>
+            <th>
+                Car Image
+            </th>
+            <th>
+                Car No.
+            </th>
+            <th>
+                Car Price in $ per day
+            </th>
+            <th>
+                Booking Status
+            </th>
+            <th>
+                Car Brand
+            </th>
+            <th>
+                Car Model
+            </th>
+            <th>
+                Car Year
+            </th>
+            <th>
+                Car Capacity
+            </th>
+            <th>
+                Car Description
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) 
+        { 
+        <tr>
+            <td>
+                <span id="btnDelete" class="glyphicon glyphicon-trash" onclick="DeleteCar(@item.CarId)"> </span> &nbsp;&nbsp;
+                <span id="btnEdit" class="glyphicon glyphicon-pencil" onclick="EditCar(@item.CarId)"></span>
+            </td>
+            <td>
+                <img src="@Url.Content("~/CarImages/" + item.CarImage)" width="150" height="150" class="img-responsive" />
+            </td>
+            <td>
+                @item.CarNumber
+            </td>
+            <td>
+                @item.CarPrice
+            </td>
+            <td>
+                @item.BookingStatus
+            </td>
+            <td>
+                @item.CarBrand
+            </td>
+            <td>
+                @item.CarModel
+            </td>
+            <td>
+                @item.CarYear
+            </td>
+            <td>
+                @item.CarCapacity
+            </td>
+            <td>
+                @item.CarDescription
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
